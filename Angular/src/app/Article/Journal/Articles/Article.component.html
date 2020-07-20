@@ -1,0 +1,187 @@
+
+<div class="container">
+
+  <div class="dataTables_length" id="bootstrap-data-table_length">
+     
+    </div>
+
+    <h2 class="m-4">Articles</h2>
+    <div class="mx-auto p=2 text-center">
+      <button  type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal11" data-whatever="@mdo">
+        Create Article
+      </button>
+<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true" data-backdrop="false">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel1">New Article</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+
+   
+<form>
+  
+
+  <div class="form-group">
+    <label for="article-title" class="col-form-label">Title :</label>
+    <input [(ngModel)]="newArticle.title" class="form-control" id="article-title" name="art_t" type="text">
+  </div>
+
+  <div class="form-group">
+    <label for="article-body" class="col-form-label">Body :</label>
+    <input [(ngModel)]="newArticle.description" class="form-control" id="article-text" name="art_d" type="text">
+  </div>
+  
+</form>
+
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button id="buttonadd" (click)="Add()"   type="button" class="btn btn-primary"  data-dismiss="modal">Add </button> 
+      </div>
+      </div>
+      </div>
+      </div> 
+    </div>
+      
+  
+  <div class="mx-auto p=2 text-center border m-2" style="width: 700px ;height:380px;">
+  <ng-container *ngFor="let item of allArticles |paginate: this.config">
+  <div class="row" >
+   
+      <div class="col-lg-5 text-center">
+        
+        <p class="card-text"><small class="text-muted">published {{ item.publish_time| date}}</small></p>
+        
+          <i class="fa fa-pie-chart  fa-3x  text-primary mt-5" aria-hidden="true"></i>
+          <br>
+
+          <div class="m-3 text-secondary">Article Title : </div>
+          
+              <h4 >{{item.title}}</h4>
+         
+          
+
+          <div class="m-3 text-secondary">author </div>
+          <div class="row">
+              <div class="col">
+                  <h4> {{item.author_name}}</h4>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <button (click)="deleteArticle(this.item)" type="button" class="btn btn-danger">Delete</button>
+              </div>
+              <div class="col">
+                  <button (click)="showupdate(this.item.id)" type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">
+                      Edit
+                    </button>
+              <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true" data-backdrop="false">
+              <div class="modal-dialog" role="document">
+              <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel1">Edit Article</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body">
+              <form>
+                
+               
+      
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Title:</label>
+                  <div class="dataTables_length" id="bootstrap-data-table_length">
+                    <input type="text" [(ngModel)]="oneArticle.title" name="entertitle">
+                  </div>
+             </div>
+
+             <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Description:</label>
+              <div class="dataTables_length" id="bootstrap-data-table_length">
+                <input type="text" [(ngModel)]="oneArticle.description" name="enterdesc">
+              </div>
+         </div>
+          
+              
+              </form>
+              
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="buttonEdit" (click)="updateArticle()"   type="button" class="btn btn-primary"  data-dismiss="modal"> Update </button> 
+                    </div>
+                    </div>
+                    </div>
+                    </div> 
+              </div>
+            </div>
+              
+          
+          
+          <!-- <button type="button" class="btn btn-outline-primary m-3">Edit budget</button> -->
+        <div class="row">
+       
+        </div>
+      </div>
+      <div class="col-lg-1 border-right"></div>
+      
+      <div  class="col-lg-6 text-center">
+          <i class="fa fa-money fa-3x text-success mt-5" aria-hidden="true"></i>
+          <div class="m-3 text-secondary"> Article Body </div>
+          <!-- Button trigger modal -->
+<button type="button" (click)="read(this.item)" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  Read Article
+</button>
+<hr>
+<ul >
+  <div *ngIf="item.published==true ;then Transferx">
+    
+  </div>
+    
+  <ng-template  #Transferx>
+    click to cancel approval
+    <button class="btn btn-danger "  (click)="approve(this.item.id)"> Cancel Approvement </button>
+  </ng-template>
+  
+  <div *ngIf="item.published==false;then Transfer">
+   
+  </div>
+  <ng-template #Transfer>
+    Please approve request.
+    <button class="btn btn-light" (click)="approve(this.item.id)" > Approve </button>
+  </ng-template>
+  
+</ul>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Article </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{item.description}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+  </div>
+   </ng-container>
+   
+</div>
+<pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
